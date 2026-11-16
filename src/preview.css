@@ -1,0 +1,235 @@
+.range-hints {
+  display: flex;
+  justify-content: space-between;
+  font-size: 8px;
+  color: #74706a;
+}
+.burn-button {
+  height: 49px;
+  width: 100%;
+  margin-top: 27px;
+  background: #de8244;
+  border: 0;
+  border-radius: 4px;
+  color: #21140c;
+  font-family: 'Sono Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.09em;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.burn-button:hover:not(:disabled) {
+  background: #f09a5e;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 24px #d87d3a30;
+}
+.burn-button:disabled {
+  opacity: 0.38;
+  cursor: not-allowed;
+}
+.burn-button > .ph:first-child {
+  margin-right: 8px;
+}
+.arrow {
+  float: right;
+  margin-right: 16px;
+  font-size: 16px;
+  margin-top: -2px;
+}
+.spinner {
+  display: inline-block;
+  font-size: 15px;
+  animation: spin 0.7s linear infinite;
+  vertical-align: middle;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.privacy {
+  font-size: 8px;
+  line-height: 1.7;
+  color: #77736d;
+  margin: 15px 0 0;
+}
+.preview {
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  min-height: 451px;
+}
+.preview-head,
+.preview-head > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.preview-head > div {
+  justify-content: flex-start;
+  gap: 12px;
+}
+.preview-head b {
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  font-weight: 500;
+}
+.live-dot {
+  font-size: 8px;
+  color: #81786e;
+  letter-spacing: 0.07em;
+}
+.live-dot:first-letter {
+  color: #e98b4a;
+}
+.preview-stage {
+  flex: 1;
+  min-height: 345px;
+  margin: 19px 0 13px;
+  background: repeating-linear-gradient(135deg, #141311, #141311 8px, #161513 8px, #161513 9px);
+  border: 1px solid #ffffff0c;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+.preview-stage img {
+  max-width: 74%;
+  max-height: 338px;
+  object-fit: contain;
+  box-shadow: 0 12px 40px #000b;
+}
+.preview-stamp {
+  position: absolute;
+  bottom: 16px;
+  right: 15px;
+  background: #100e0ce6;
+  color: #eaa06b;
+  border: 1px solid #a55d3766;
+  padding: 7px 9px;
+  font:
+    8px 'Sono Mono',
+    monospace;
+  letter-spacing: 0.1em;
+}
+.empty-preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #7a756e;
+}
+.empty-preview > b {
+  font-size: 11px;
+  font-weight: 500;
+  margin: 16px 0 6px;
+}
+.empty-preview > span {
+  font-size: 10px;
+  color: #69655f;
+}
+.paper-stack {
+  height: 89px;
+  width: 76px;
+  position: relative;
+  margin-top: 5px;
+}
+.paper-stack div {
+  position: absolute;
+  width: 61px;
+  height: 76px;
+  top: 8px;
+  left: 9px;
+  background: #c7b9a3;
+  border: 1px solid #e0d5c4;
+  transform: rotate(-9deg);
+  box-shadow: 0 8px 20px #0007;
+}
+.paper-stack div:nth-child(2) {
+  transform: rotate(7deg);
+  background: #d8cbb6;
+}
+.paper-stack div:last-child {
+  transform: rotate(-1deg);
+  display: grid;
+  place-items: center;
+  color: #d98a4b;
+  font-size: 26px;
+  background: linear-gradient(135deg, #dfd2bd, #bca992);
+}
+.preview-foot {
+  display: flex;
+  justify-content: space-between;
+  color: #88837c;
+  font-size: 8px;
+  letter-spacing: 0.08em;
+}
+.error,
+.success {
+  font-size: 11px;
+  line-height: 1.6;
+  margin: 12px 0 0;
+}
+.error {
+  color: #ef8b7d;
+}
+.success {
+  color: #9aca86;
+}
+footer {
+  margin: 47px 0 24px;
+  padding-top: 16px;
+  border-top: 1px solid #ffffff12;
+  display: flex;
+  justify-content: space-between;
+  color: #716d66;
+  font-size: 8px;
+  letter-spacing: 0.1em;
+}
+.footer-star {
+  color: #df8a4b;
+  margin-left: 8px;
+}
+@media (max-width: 760px) {
+  .shell {
+    padding: 0 20px;
+  }
+  .hero {
+    padding-top: 48px;
+  }
+  h1 {
+    font-size: 60px;
+  }
+  .workspace {
+    grid-template-columns: 1fr;
+  }
+  .preview {
+    min-height: 400px;
+  }
+  .preview-stage {
+    min-height: 300px;
+  }
+  .local {
+    font-size: 8px;
+  }
+}
+@media (max-width: 390px) {
+  h1 {
+    font-size: 52px;
+  }
+  .shell {
+    padding: 0 14px;
+  }
+  .controls,
+  .preview {
+    padding: 18px;
+  }
+  .local {
+    letter-spacing: 0;
+  }
+  .intro {
+    font-size: 13px;
+  }
+}

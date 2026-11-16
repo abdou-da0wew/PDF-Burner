@@ -1,0 +1,49 @@
+.preview-stage {
+  isolation: isolate;
+}
+.preview-stage img {
+  animation: paper-reveal 900ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.preview-stage:has(img)::after {
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+  content: '';
+  inset: 4% 5%;
+  opacity: 0.28;
+  mix-blend-mode: screen;
+  background:
+    radial-gradient(ellipse at 0% 20%, #f18a3a90, transparent 19%),
+    radial-gradient(ellipse at 98% 79%, #ed6c2a80, transparent 18%);
+  animation: ember-flicker 2.4s ease-in-out infinite alternate;
+}
+@keyframes paper-reveal {
+  from {
+    opacity: 0;
+    filter: brightness(1.4) sepia(0.8) saturate(1.5);
+    transform: scale(1.035);
+    clip-path: inset(7% 5% 4% round 8%);
+  }
+  to {
+    opacity: 1;
+    filter: none;
+    transform: scale(1);
+    clip-path: inset(0 round 0);
+  }
+}
+@keyframes ember-flicker {
+  from {
+    opacity: 0.12;
+    filter: blur(10px);
+  }
+  to {
+    opacity: 0.34;
+    filter: blur(3px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .preview-stage img,
+  .preview-stage:has(img)::after {
+    animation: none;
+  }
+}

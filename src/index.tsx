@@ -1,0 +1,16 @@
+import { render } from 'solid-js/web';
+import App from './ui';
+import './fonts.css';
+import './style.css';
+import './workspace.css';
+import './preview.css';
+import './icons.css';
+import './locale.css';
+import './download.css';
+import './settings.css';
+import './burn.css';
+import './header.css';
+import './chrome.css';
+const root = document.getElementById('root');
+if (!root) throw new Error('App root element is missing');
+render(() => <App />, root);

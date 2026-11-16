@@ -1,0 +1,31 @@
+@import '@fontsource/alumni-sans-collegiate-one/latin-400.css';
+@import '@fontsource/alumni-sans-collegiate-one/latin-400-italic.css';
+
+@font-face {
+  font-family: 'Sono Variable';
+  src: url('@fontsource-variable/sono/files/sono-latin-wght-normal.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sono Mono';
+  src: url('@fontsource-variable/sono/files/sono-latin-mono-normal.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+}
+@font-face {
+  font-family: Firjar;
+  src: url('/fonts/Firjar-Regular.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: Firjar;
+  src: url('/fonts/Firjar-Bold.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
