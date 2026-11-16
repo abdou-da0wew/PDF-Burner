@@ -1,19 +1,21 @@
+import { splitProps } from 'solid-js';
 import type { JSX } from 'solid-js';
 
-/** Solid-native shadcn-style primitives: class-based variants, composable slots, native semantics. */
+/** Solid-native shadcn-style primitives with shared feedback and composable class variants. */
 type ButtonProps = JSX.ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: 'default' | 'outline' | 'ghost' | 'secondary' | 'danger';
   size?: 'default' | 'sm' | 'icon';
 };
 
 export function Button(props: ButtonProps) {
-  const variant = () => props.variant ?? 'default';
-  const size = () => props.size ?? 'default';
+  const [local, attributes] = splitProps(props, ['variant', 'size', 'class', 'children']);
   return (
     <button
-      {...props}
-      class={`ui-button button-${variant()} button-${size()} ${props.class ?? ''}`.trim()}
-    />
+      {...attributes}
+      class={`ui-button button-${local.variant ?? 'default'} button-${local.size ?? 'default'} ${local.class ?? ''}`.trim()}
+    >
+      <span class="button-label-slot">{local.children}</span>
+    </button>
   );
 }
 

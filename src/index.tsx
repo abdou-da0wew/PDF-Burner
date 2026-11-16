@@ -11,6 +11,7 @@ import './settings.css';
 import './burn.css';
 import './header.css';
 import './chrome.css';
+import './touch.css';
 const root = document.getElementById('root');
 if (!root) throw new Error('App root element is missing');
 render(() => <App />, root);

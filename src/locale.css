@@ -12,7 +12,19 @@ html[lang='ar'] h1 {
 }
 html[lang='ar'] h1 em {
   color: #e99050;
+  font-family: Firjar, sans-serif;
   font-style: normal;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+html[lang='ar'] .intro {
+  font-family: Firjar, sans-serif;
+  font-size: 16px;
+  line-height: 2;
+}
+html[lang='ar'] .eyebrow {
+  font-family: Firjar, sans-serif;
+  font-size: 12px;
   letter-spacing: 0;
 }
 html[lang='ar'] .eyebrow,
@@ -69,12 +81,13 @@ html[dir='rtl'] .eyebrow span {
 html[dir='rtl'] .intensity input {
   direction: rtl;
   background: linear-gradient(
-    to left,
-    #e78a49 0%,
-    #e78a49 var(--pct),
-    #48423c var(--pct),
-    #48423c 100%
-  );
+      to left,
+      #e78a49 0%,
+      #e78a49 var(--pct),
+      #48423c var(--pct),
+      #48423c 100%
+    )
+    center / 100% 4px no-repeat;
 }
 html[dir='rtl'] .preview-stamp {
   right: auto;

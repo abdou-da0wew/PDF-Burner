@@ -131,18 +131,22 @@ export default function ControlPanel(props: Props) {
             <Show
               when={props.done()}
               fallback={
-                <>
+                <span class="burn-state">
                   <i class="ph ph-fire" /> {props.t('burn')}{' '}
                   <i class="ph ph-arrow-up-right arrow" />
-                </>
+                </span>
               }
             >
-              <i class="ph ph-download-simple" /> {props.t('download')}
+              <span class="burn-state">
+                <i class="ph ph-download-simple" /> {props.t('download')}
+              </span>
             </Show>
           }
         >
-          <i class="ph ph-circle-notch spinner" />{' '}
-          {props.t('burning').replace('{progress}', `${props.progress()}`)}
+          <span class="burn-state">
+            <i class="ph ph-circle-notch spinner" />{' '}
+            {props.t('burning').replace('{progress}', `${props.progress()}`)}
+          </span>
         </Show>
       </Button>
       <Show when={props.error()}>

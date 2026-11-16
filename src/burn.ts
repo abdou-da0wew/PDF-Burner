@@ -1,5 +1,6 @@
+const clamp = (value: number) => Math.max(0, Math.min(1, value));
 const smooth = (a: number, b: number, value: number) => {
-  const t = Math.max(0, Math.min(1, (value - a) / (b - a)));
+  const t = clamp((value - a) / (b - a));
   return t * t * (3 - 2 * t);
 };
 
@@ -21,12 +22,13 @@ function noise(x: number, y: number, seed: number) {
   return top * (1 - uy) + bottom * uy;
 }
 
+/** Six compact octaves approximate shader FBM without making per-page processing expensive. */
 function fbm(x: number, y: number, seed: number) {
   let value = 0,
     amplitude = 0.5,
     frequency = 1,
     weight = 0;
-  for (let octave = 0; octave < 4; octave++) {
+  for (let octave = 0; octave < 6; octave++) {
     value += amplitude * noise(x * frequency, y * frequency, seed + octave * 7919);
     weight += amplitude;
     frequency *= 2.03;
@@ -44,13 +46,16 @@ function paperGrain(ctx: CanvasRenderingContext2D, seed: number, width: number, 
   const pixels = tileContext.createImageData(tile.width, tile.height);
   for (let y = 0; y < tile.height; y++) {
     for (let x = 0; x < tile.width; x++) {
+      const u = x / tile.width,
+        v = y / tile.height;
+      const grain = fbm(u * 6, v * 12, seed + 317);
+      const fiber = noise(u * 40, v * 8, seed + 911);
+      const fleck = hash(x, y, seed + 1201) - 0.5;
+      const tone = Math.round(255 - grain * 19 - fiber * 10 + fleck * 8);
       const index = (y * tile.width + x) * 4;
-      const fiber = noise(x * 0.08, y * 0.9, seed + 317);
-      const grain = hash(x, y, seed + 911);
-      const tone = Math.round(238 + grain * 16 - fiber * 5);
       pixels.data[index] = tone;
-      pixels.data[index + 1] = Math.min(255, tone + 1);
-      pixels.data[index + 2] = Math.min(255, tone + 4);
+      pixels.data[index + 1] = Math.min(255, tone - 2);
+      pixels.data[index + 2] = Math.min(255, tone - 13);
       pixels.data[index + 3] = 255;
     }
   }
@@ -59,13 +64,13 @@ function paperGrain(ctx: CanvasRenderingContext2D, seed: number, width: number, 
   if (!pattern) return;
   ctx.save();
   ctx.globalCompositeOperation = 'multiply';
-  ctx.globalAlpha = 0.16;
+  ctx.globalAlpha = 0.34;
   ctx.fillStyle = pattern;
   ctx.fillRect(0, 0, width, height);
   ctx.restore();
 }
 
-/** CPU-friendly paper grain and a seeded, uneven burn front rendered at reduced resolution. */
+/** Shader-inspired paper grain, FBM dissolve front, soot falloff, and ember edge, rasterized cheaply. */
 export function burnCanvas(source: HTMLCanvasElement, intensity: number, seed: number) {
   const canvas = document.createElement('canvas');
   canvas.width = source.width;
@@ -79,8 +84,8 @@ export function burnCanvas(source: HTMLCanvasElement, intensity: number, seed: n
 
   context.save();
   context.globalCompositeOperation = 'multiply';
-  context.globalAlpha = 0.105;
-  context.fillStyle = '#f6e6c2';
+  context.globalAlpha = 0.16;
+  context.fillStyle = '#fff0c8';
   context.fillRect(0, 0, width, height);
   context.restore();
   paperGrain(context, seed, width, height);
@@ -92,63 +97,76 @@ export function burnCanvas(source: HTMLCanvasElement, intensity: number, seed: n
   mask.height = Math.max(2, Math.round(height * ratio));
   const maskContext = mask.getContext('2d');
   if (!maskContext) throw new Error('Canvas rendering is unavailable');
-  const image = maskContext.createImageData(mask.width, mask.height);
-  const depth = minSide * (0.035 + intensity * 0.13);
-  const transition = Math.max(2, minSide * 0.012);
+  const pixels = maskContext.createImageData(mask.width, mask.height);
+  const edgeDepth = minSide * (0.035 + intensity * 0.13);
+  const edgeWidth = Math.max(2, minSide * 0.012);
+  const front = -0.2 + 1.4 * (0.22 + intensity * 0.5);
 
   for (let y = 0; y < mask.height; y++) {
     const v = (y + 0.5) / mask.height;
     for (let x = 0; x < mask.width; x++) {
       const u = (x + 0.5) / mask.width;
-      const pixelX = u * width,
-        pixelY = v * height;
-      const distance = Math.min(pixelX, pixelY, width - pixelX, height - pixelY);
-      const broad = fbm(u * 4.1 + seed * 0.00001, v * 4.7, seed);
-      const detail = noise(u * 18 + seed * 0.00003, v * 22, seed + 11939);
-      const front = depth * (0.5 + broad * 0.72 + (detail - 0.5) * 0.24);
-      const soot = 1 - smooth(front - transition * 1.6, front + transition * 1.25, distance);
-      const ember =
-        1 - smooth(transition * 0.35, transition * (2.1 + intensity), Math.abs(distance - front));
+      const px = u * width,
+        py = v * height;
+      const edgeDistance = Math.min(px, py, width - px, height - py);
+      const broad = fbm(u * 3, v * 6, seed + 5011);
+      const detail = noise(u * 40, v * 8, seed + 11939);
+      const field = v + (broad - 0.5) * 0.14 + (detail - 0.5) * 0.035;
+      const frontEdge =
+        smooth(front - 0.035, front - 0.008, field) *
+        (1 - smooth(front + 0.004, front + 0.07, field));
+      const charredPaper = 1 - smooth(front - 0.18, front - 0.055, field);
+      const perimeter = edgeDepth * (0.5 + broad * 0.72 + (detail - 0.5) * 0.24);
+      const perimeterSoot =
+        1 - smooth(perimeter - edgeWidth * 1.6, perimeter + edgeWidth * 1.25, edgeDistance);
+      const perimeterEmber =
+        1 -
+        smooth(edgeWidth * 0.35, edgeWidth * (2.1 + intensity), Math.abs(edgeDistance - perimeter));
       const corner =
         1 -
         smooth(
-          depth * 0.55,
-          depth * 1.8,
+          edgeDepth * 0.55,
+          edgeDepth * 1.8,
           Math.min(
-            Math.hypot(pixelX, pixelY),
-            Math.hypot(width - pixelX, pixelY),
-            Math.hypot(pixelX, height - pixelY),
-            Math.hypot(width - pixelX, height - pixelY),
+            Math.hypot(px, py),
+            Math.hypot(width - px, py),
+            Math.hypot(px, height - py),
+            Math.hypot(width - px, height - py),
           ),
         );
-      const alpha = Math.min(
-        0.9,
-        soot * (0.36 + intensity * 0.36) + ember * 0.28 + corner * intensity * 0.12,
+      const soot = Math.max(
+        perimeterSoot * (0.48 + intensity * 0.3),
+        charredPaper * (0.08 + intensity * 0.11),
       );
-      const glow = Math.min(1, ember * (0.7 + detail * 0.5));
+      const ember = Math.max(
+        frontEdge * (0.58 + detail * 0.4),
+        perimeterEmber * 0.72,
+        corner * intensity * 0.2,
+      );
+      const alpha = Math.min(0.9, soot + ember * 0.68);
+      const glow = clamp(ember * (0.76 + detail * 0.28));
       const index = (y * mask.width + x) * 4;
-      image.data[index] = Math.round(35 + glow * 198);
-      image.data[index + 1] = Math.round(20 + glow * 81);
-      image.data[index + 2] = Math.round(12 + glow * 27);
-      image.data[index + 3] = Math.round(alpha * 255);
+      pixels.data[index] = Math.round(31 + glow * 222);
+      pixels.data[index + 1] = Math.round(17 + glow * 106);
+      pixels.data[index + 2] = Math.round(9 + glow * 44);
+      pixels.data[index + 3] = Math.round(alpha * 255);
     }
   }
-  maskContext.putImageData(image, 0, 0);
+  maskContext.putImageData(pixels, 0, 0);
   context.imageSmoothingEnabled = true;
   context.drawImage(mask, 0, 0, width, height);
 
   const random = (index: number) => hash(index, seed, seed ^ 0x5f356495);
-  const sparks = Math.round(20 + intensity * 35);
+  const sparks = Math.round(14 + intensity * 24);
   for (let index = 0; index < sparks; index++) {
-    const side = index % 4,
-      along = random(index + 1);
-    const x = side < 2 ? along * width : side === 2 ? 0 : width;
-    const y = side < 2 ? (side === 0 ? 0 : height) : along * height;
-    const radius = minSide * (0.004 + random(index + 83) * (0.012 + intensity * 0.014));
+    const along = random(index + 1);
+    const x = along * width;
+    const y = Math.max(0, Math.min(height, (front + (random(index + 51) - 0.5) * 0.08) * height));
+    const radius = minSide * (0.002 + random(index + 83) * (0.006 + intensity * 0.009));
     const spot = context.createRadialGradient(x, y, 0, x, y, radius);
-    spot.addColorStop(0, `rgba(31,16,10,${0.6 + intensity * 0.25})`);
-    spot.addColorStop(0.62, `rgba(95,39,16,${0.4 + intensity * 0.28})`);
-    spot.addColorStop(1, 'rgba(206,91,28,0)');
+    spot.addColorStop(0, `rgba(255,180,82,${0.22 + intensity * 0.25})`);
+    spot.addColorStop(0.45, `rgba(235,84,28,${0.28 + intensity * 0.24})`);
+    spot.addColorStop(1, 'rgba(206,65,20,0)');
     context.fillStyle = spot;
     context.beginPath();
     context.arc(x, y, radius, 0, Math.PI * 2);

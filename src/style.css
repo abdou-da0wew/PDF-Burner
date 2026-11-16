@@ -42,6 +42,13 @@
     opacity 180ms ease;
   -webkit-tap-highlight-color: transparent;
 }
+.button-label-slot {
+  display: inline-flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
 .ui-button:hover:not(:disabled) {
   transform: translateY(-1px);
   box-shadow:

@@ -53,8 +53,11 @@ export default function App() {
     [downloadUrl, setDownloadUrl] = createSignal<string>(),
     [downloadName, setDownloadName] = createSignal('');
   let openPicker = () => {};
+  let revokeTimer: number | undefined;
   const t = (key: TranslationKey) => messages[locale()][key];
   const clearDownload = () => {
+    window.clearTimeout(revokeTimer);
+    revokeTimer = undefined;
     const previous = downloadUrl();
     if (previous) URL.revokeObjectURL(previous);
     setDownloadUrl();
@@ -141,6 +144,10 @@ export default function App() {
     anchor.download = name;
     anchor.click();
     setDone(false);
+    revokeTimer = window.setTimeout(() => {
+      revokeTimer = undefined;
+      if (downloadUrl() === url) clearDownload();
+    }, 2000);
   }
 
   const handleKeydown = (event: KeyboardEvent) => {

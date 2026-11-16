@@ -112,15 +112,18 @@
 }
 .intensity input {
   width: 100%;
-  height: 4px;
+  height: 28px;
+  padding: 0;
   appearance: none;
   background: linear-gradient(
-    to right,
-    #e78a49 0%,
-    #e78a49 var(--pct),
-    #48423c var(--pct),
-    #48423c 100%
-  );
+      to right,
+      #e78a49 0%,
+      #e78a49 var(--pct),
+      #48423c var(--pct),
+      #48423c 100%
+    )
+    center / 100% 4px no-repeat;
+  touch-action: pan-y;
   border-radius: 4px;
   outline: 0;
   margin: 16px 0 11px;
@@ -128,8 +131,8 @@
 }
 .intensity input::-webkit-slider-thumb {
   appearance: none;
-  width: 15px;
-  height: 15px;
+  width: 22px;
+  height: 22px;
   border-radius: 50%;
   background: #f5ad71;
   border: 3px solid #241b14;
