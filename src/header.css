@@ -131,7 +131,7 @@ html[lang='ar'] .settings-trigger {
     min-height: 44px;
     padding: 0;
   }
-  .settings-trigger > span {
+  .settings-trigger .button-label-slot > span {
     display: none;
   }
   .header-actions {
