@@ -10,6 +10,7 @@ import './download.css';
 import './settings.css';
 import './burn.css';
 import './header.css';
+import './glass.css';
 import './chrome.css';
 import './touch.css';
 const root = document.getElementById('root');
