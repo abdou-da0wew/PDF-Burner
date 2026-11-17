@@ -2,8 +2,12 @@
   position: sticky;
   top: 0;
   z-index: 12;
+  display: block;
+  box-sizing: border-box;
   height: 82px;
   padding-top: 10px;
+  border: 0;
+  background: transparent;
 }
 .glass-header {
   display: grid;
