@@ -1,0 +1,19 @@
+.burn-button.is-downloading {
+  color: #24170e;
+  background: linear-gradient(115deg, #f3d7b8, #eab889);
+  border-color: #f3d7b8;
+  box-shadow: 0 5px 22px #f0b47b1f;
+}
+.burn-button.is-downloading:hover:not(:disabled) {
+  color: #1b120b;
+  background: linear-gradient(115deg, #fff0dc, #f4cfaa);
+  box-shadow: 0 7px 26px #f0b47b40;
+}
+.burn-button.is-downloading .ph {
+  margin-inline-end: 9px;
+  font-size: 16px;
+}
+html[lang='ar'] .burn-button.is-downloading {
+  font-family: Firjar, sans-serif;
+  font-size: 16px;
+}

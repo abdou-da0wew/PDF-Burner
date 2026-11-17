@@ -1,0 +1,117 @@
+html[lang='ar'] {
+  font-family: Firjar, sans-serif;
+  font-synthesis: none;
+}
+html[lang='ar'] h1 {
+  font-family: Firjar, sans-serif;
+  font-size: clamp(43px, 8.5vw, 70px);
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1.12;
+  text-wrap: balance;
+}
+html[lang='ar'] h1 em {
+  color: #e99050;
+  font-family: Firjar, sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+html[lang='ar'] .intro {
+  font-family: Firjar, sans-serif;
+  font-size: 16px;
+  line-height: 2;
+}
+html[lang='ar'] .eyebrow {
+  font-family: Firjar, sans-serif;
+  font-size: 12px;
+  letter-spacing: 0;
+}
+html[lang='ar'] .eyebrow,
+html[lang='ar'] .number,
+html[lang='ar'] .section-title small,
+html[lang='ar'] .dropzone small,
+html[lang='ar'] .intensity-label span,
+html[lang='ar'] .range-hints,
+html[lang='ar'] .privacy,
+html[lang='ar'] .preview-head,
+html[lang='ar'] .preview-foot,
+html[lang='ar'] footer,
+html[lang='ar'] .burn-button,
+html[lang='ar'] .preview-stamp,
+html[lang='ar'] .download-button,
+html[lang='ar'] .settings-trigger {
+  font-family: Firjar, sans-serif;
+  letter-spacing: 0;
+}
+.language-button {
+  min-height: 34px;
+  padding: 0 12px;
+  border: 1px solid #ffffff24;
+  color: #e4ded5;
+  background: #ffffff08;
+  font:
+    12px 'Sono Variable',
+    sans-serif;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.language-button:hover {
+  border-color: #df8a4b;
+  color: #f1a166;
+}
+.language-button .ph {
+  margin-inline-end: 6px;
+}
+html[lang='ar'] .language-button {
+  font-family: Firjar, sans-serif;
+}
+html[dir='rtl'] .hero h1,
+html[dir='rtl'] .intro,
+html[dir='rtl'] .section-title,
+html[dir='rtl'] .intensity,
+html[dir='rtl'] .privacy,
+html[dir='rtl'] .preview {
+  text-align: right;
+}
+html[dir='rtl'] .eyebrow span {
+  margin-right: 0;
+  margin-left: 10px;
+}
+html[dir='rtl'] .intensity input {
+  direction: rtl;
+  background: linear-gradient(
+      to left,
+      #e78a49 0%,
+      #e78a49 var(--pct),
+      #48423c var(--pct),
+      #48423c 100%
+    )
+    center / 100% 4px no-repeat;
+}
+html[dir='rtl'] .preview-stamp {
+  right: auto;
+  left: 15px;
+}
+html[dir='rtl'] .dropzone,
+html[dir='rtl'] .empty-preview {
+  text-align: center;
+}
+html[dir='rtl'] .privacy {
+  line-height: 1.8;
+}
+@media (max-width: 760px) {
+  .topbar {
+    height: auto;
+    min-height: 76px;
+    flex-wrap: wrap;
+    gap: 9px;
+    padding: 10px 0;
+  }
+  .language-button {
+    flex-shrink: 0;
+  }
+  html[dir='rtl'] .local {
+    text-align: left;
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "name": "pdf-burner",
+  "packageManager": "bun@1.4.4",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "turbo run build:ui",
+    "build:ui": "vite build",
+    "start": "bun server.ts",
+    "check": "tsc --noEmit",
+    "test": "vitest run",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "oxlint src server.ts vite.config.ts && biome check src server.ts vite.config.ts",
+    "turbo": "turbo"
+  },
+  "dependencies": {
+    "@expo-google-fonts/firjar": "^0.4.0",
+    "@fontsource-variable/sono": "^5.3.0",
+    "@fontsource/alumni-sans-collegiate-one": "^5.3.0",
+    "@phosphor-icons/web": "^2.1.2",
+    "pdf-lib": "^1.17.1",
+    "pdfjs-dist": "^4.10.38",
+    "solid-js": "^1.9.4"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "@napi-rs/canvas": "^1.1.1",
+    "@types/node": "^26.6.6",
+    "jsdom": "^31.0.1",
+    "oxlint": "^0.15.6",
+    "prettier": "^3.4.2",
+    "turbo": "^2.3.3",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.5",
+    "vite-plugin-solid": "^2.11.0",
+    "vitest": "^5.1.0"
+  }
+}

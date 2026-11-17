@@ -1,0 +1,66 @@
+@media (hover: none) and (pointer: coarse) {
+  .ui-button:hover:not(:disabled) {
+    transform: none;
+    box-shadow: none;
+  }
+  .ui-button:active:not(:disabled) {
+    opacity: 0.78;
+    transform: scale(0.97);
+  }
+  .dropzone {
+    touch-action: manipulation;
+  }
+  .dropzone:hover:not(.has-file) {
+    border-color: #ffffff35;
+    background: #ffffff03;
+  }
+}
+@media (max-width: 760px) {
+  .shell {
+    padding-inline: 20px;
+  }
+  .hero {
+    padding-top: 44px;
+  }
+  .workspace {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+  .controls,
+  .preview {
+    min-width: 0;
+  }
+  .dropzone {
+    min-height: 156px;
+  }
+  .preview-stage {
+    min-height: min(64vw, 320px);
+  }
+  .section-title small,
+  .dropzone small,
+  .range-hints,
+  .privacy,
+  .preview-foot,
+  footer {
+    font-size: 10px;
+  }
+  .intensity-label span {
+    font-size: 9px;
+  }
+}
+@media (max-width: 390px) {
+  .shell {
+    padding-inline: 14px;
+  }
+  .controls,
+  .preview {
+    padding: 16px;
+  }
+  .burn-button {
+    min-height: 52px;
+    height: auto;
+    padding: 10px 12px;
+    line-height: 1.45;
+    letter-spacing: 0.035em;
+  }
+}

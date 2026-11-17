@@ -1,0 +1,50 @@
+@font-face {
+  font-family: Phosphor;
+  src: url('/icons/phosphor.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+.ph {
+  font-family: Phosphor, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1;
+  font-variant: normal;
+  text-transform: none;
+  font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
+.ph-arrow-up::before {
+  content: '\e08e';
+}
+.ph-arrow-up-right::before {
+  content: '\e092';
+}
+.ph-circle-notch::before {
+  content: '\eb44';
+}
+.ph-eye::before {
+  content: '\e220';
+}
+.ph-fire::before {
+  content: '\e242';
+}
+.ph-lock-key::before {
+  content: '\e2fe';
+}
+.ph-shield-check::before {
+  content: '\e40c';
+}
+.ph-translate::before {
+  content: '\e4a2';
+}
+.ph-download-simple::before {
+  content: '\e20c';
+}
+.ph-gear-six::before {
+  content: '\e272';
+}
+.ph-x::before {
+  content: '\e4f6';
+}
