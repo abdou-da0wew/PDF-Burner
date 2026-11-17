@@ -19,10 +19,10 @@ export default function AppHeader(props: Props) {
         class="glass-header"
         width="100%"
         height="100%"
-        borderRadius={36}
+        borderRadius={18}
         borderWidth={0.1}
         backgroundOpacity={props.scrolled() ? 0.2 : 0.12}
-        blur={props.scrolled() ? 24 : 18}
+        blur={props.scrolled() ? 12 : 9}
         saturation={1.55}
         data-scrolled={props.scrolled() ? '' : undefined}
       >
